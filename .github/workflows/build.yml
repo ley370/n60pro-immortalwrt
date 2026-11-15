@@ -41,6 +41,19 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
 
+      - name: Cache ccache
+        uses: actions/cache@v4
+        with:
+          path: ~/.ccache
+          key: ccache-openwrt-25.12-mediatek-${{ hashFiles('n60-pro.config') }}
+          restore-keys: |
+            ccache-openwrt-25.12-mediatek-
+
+      - name: Setup ccache
+        run: |
+          ccache --max-size=5G
+          ccache -z
+
       - name: Clone source code
         working-directory: /workdir
         run: |
@@ -89,7 +102,10 @@ jobs:
 
       - name: Check space usage
         if: (!cancelled())
-        run: df -hT
+        run: |
+          df -hT
+          echo "--- ccache stats ---"
+          ccache -s || true
 
       - name: Upload firmware to Artifacts
         uses: actions/upload-artifact@v4
@@ -97,4 +113,3 @@ jobs:
         with:
           name: ImmortalWrt-25.12-N60Pro${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           path: openwrt/bin/targets/mediatek/filogic/
-

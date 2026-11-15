@@ -34,6 +34,8 @@
 - AdGuardHome 的中文语言包官方源没有，已在配置里列出 `luci-i18n-adguardhome-zh-cn`，有源提供就打进去，没有则自动跳过、AdGuardHome 用英文界面。
 - v4 已去掉的包：iStore（依赖 opkg，在 25.12/apk 上不可靠）、SmartDNS（与 AdGuardHome + PassWall 重复）、QoSmate（与硬件加速互斥）、luci-app-statistics（collectd + rrdtool 体积大，已有 nlbwmon）。如需这些功能，刷机后用 LuCI → 系统 → 软件包或 `apk add` 自行安装。
 - v5 补充：USB 驱动加了 kmod-usb-storage-uas（UASP）和 e2fsprogs（mkfs.ext4）；删了 chenmozhijin 专属的 TURBOACC_INCLUDE_* 两行，改加官方 kmod-tcp-bbr。
+- v8 补充：PassWall 默认的 Shadowsocks-Rust 子选项已关（它会在 aarch64 上默认拉起庞大的 Rust 工具链；sing-box 已原生支持 Shadowsocks，含 SS-2022）。diy-part2.sh 里仍保留 download-ci-llvm 改 false 的兜底（万一仍有包拉起 Rust，编译不会再因 CI 产物 404 失败）。
+- v9 补充：PassWall 只留 sing-box 一个内核。PassWall 在 aarch64 上默认同时勾 xray-core 和 sing-box（各 25–35MB），128MB 闪存只留 sing-box；另关 PassWall 的 SmartDNS 子选项（它默认 y，会把 v4 删掉的 smartdns 又拉回来）。
 - 后期直接装插件：可以。两种方式：① LuCI → 系统 → 软件包，搜官方源里的包安装；② SSH 上 `apk update && apk add <包名>`。前提是路由器已能上网（PPPoE 通）。官方源 25.12 的包都能这样装。
 - 闪存提醒：N60 Pro 只有 128MB 闪存，sing-box（约 30MB）+ AdGuardHome（约 40MB）占了大头，刷机后 /overlay 剩余空间有限。后续更新 PassWall 规则库或 AdGuardHome 过滤列表时注意空间；空间紧张时可插 USB 3.0 U 盘扩容 /overlay（USB 驱动已编进固件）。
 - 固件默认 LAN 为 192.168.1.1，root 无密码（首次进 LuCI 后立即设密码），无线默认关闭。

@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5 # v14: Node 24 (v4 was Node 20, deprecated)
 
       - name: Initialization environment
         env:
@@ -42,7 +42,7 @@ jobs:
           sudo chown $USER:$GROUPS /workdir
 
       - name: Cache ccache
-        uses: actions/cache@v4
+        uses: actions/cache@v5 # v14: Node 24 (v4 was Node 20, deprecated)
         with:
           path: ~/.ccache
           key: ccache-openwrt-25.12-mediatek-${{ hashFiles('n60-pro.config') }}
@@ -108,7 +108,7 @@ jobs:
           ccache -s || true
 
       - name: Upload firmware to Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6 # v14: Node 24. NOTE: v5 still ships node20, only v6+ is node24; inputs used here (name/path) are unchanged.
         if: steps.compile.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
         with:
           name: ImmortalWrt-25.12-N60Pro${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}

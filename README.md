@@ -10,10 +10,6 @@
 - 官方 Turbo ACC（luci-app-turboacc）；硬件流量分载内置
 - 标准 mac80211 无线驱动（已装，默认关闭）
 
-### 当前构建
-
-- #5：配置 47 个包，产物 78.4 MB，SHA256 `5be6a05d1bca7ad96815f573e3c07ba1f119da96609c9fcd1469959832f5bfa6`，构建 1h40m36s
-
 ### 默认设置
 
 - LAN：192.168.10.1/24，DHCP 默认（客户端 192.168.10.100–249）
@@ -50,8 +46,6 @@
 | 网页终端 | ttyd |
 | 断网自愈 | watchcat |
 | 升级 | attendedsysupgrade |
-
-未包含：SmartDNS、QoSmate、iStore、luci-app-statistics、Samba / Transmission（NAS 已有）、OpenClash / Nikki / HomeProxy（代理核心只留 PassWall2）。
 
 效果说明：
 
@@ -91,3 +85,4 @@
 | 2026-11-15 23:02 | 构建 #4 | 编成（v13 配置，.itb 42,433 KB，3h3m52s） |
 | 2026-11-16 11:04 | 构建 #5 | 编成（v14，仅工作流 action 升版，配置不变；产物 78.4 MB，SHA256 `5be6a05d…`） |
 | 2026-11-19 00:05 | 构建 #5（未重编） | README 按四类口径重写并增加修订记录（本条） |
+| 2026-11-19 08:09 | 构建 #5（未重编） | README 口径调整：删“未包含”与“当前构建”两节，历史记录只留修订记录；README 只说明当前版本 |
